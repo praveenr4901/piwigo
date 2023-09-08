@@ -30,7 +30,7 @@ COPY piwigo.conf /etc/apache2/sites-available/piwigo.conf
 
 # Enable necessary Apache mods and site configuration
 RUN a2enmod rewrite \
-    && a2ensite piwigo.conf \
+    && a2ensite piwigo.conf 
 #    && service apache2 restart
 
 # Download, unzip, and set permissions for Piwigo
