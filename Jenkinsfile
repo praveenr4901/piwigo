@@ -6,5 +6,10 @@ pipeline {
                 checkout scmGit(branches: [[name: '*']], extensions: [], userRemoteConfigs: [[credentialsId: 'gitrepo', url: 'https://github.com/praveenr4901/piwigo.git']])
             }
         }
-     }
+    }
+    stage('DOKCER') { 
+        steps {
+            sh 'docker build -t praveen .'
+        }
+    }
 }
