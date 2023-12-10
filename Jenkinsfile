@@ -1,15 +1,19 @@
 pipeline {
-    agent any 
+    agent any
     stages {
-        stage('Clone') { 
+        stage('Clone') {
             steps {
-                checkout scmGit(branches: [[name: '*']], extensions: [], userRemoteConfigs: [[credentialsId: 'gitrepo', url: 'https://github.com/praveenr4901/piwigo.git']])
+                checkout([$class: 'GitSCM', branches: [[name: '*']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'gitrepo', url: 'https://github.com/praveenr4901/piwigo.git']]])
+            }
+        }
+        stage('Build') {
+            steps {
+                script {
+                    // Use 'script' block for Docker commands
+                    sh 'docker build -t praveen .'
+                }
             }
         }
     }
-    stage('build') { 
-        steps {
-            sh 'docker build -t praveen .'
-        }
-    }
 }
+
