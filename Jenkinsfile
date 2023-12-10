@@ -8,10 +8,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                script {
-                    // Use 'script' block for Docker commands
-                    sh 'docker build -t praveen .'
-                }
+                   sh 'docker build -t praveen .'
             }
         }
     }
