@@ -7,7 +7,7 @@ pipeline {
             }
         }
     }
-    stage('DOKCER') { 
+    stage('build') { 
         steps {
             sh 'docker build -t praveen .'
         }
