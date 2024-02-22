@@ -1,4 +1,4 @@
-name: Deployment
+name: Deploy to Pantheon Live
 
 on:
   push:
@@ -6,20 +6,18 @@ on:
       - main
 
 jobs:
-  deploy:
+  build-and-sync:
     runs-on: ubuntu-latest
-    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Deploy to server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOSTNAME}}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.PORT }}
-          script: |
-            ssh-keyscan -H ${{ secrets.HOSTNAME }} >> ~/.ssh/known_hosts
-            ssh -i ${{ secrets.SSH_PRIVATE_KEY }} ${{ secrets.USERNAME }}@${{ secrets.HOSTNAME }} 'cd /home/xminds/test'
+    - name: Sync to Remote Repository
+      uses: alleyinteractive/action-deploy-to-remote-repository@v1
+      with:
+        remote_repo: 'git@github.com:praveenr4901/piwigo.git'
+        remote_branch: 'main'
+        destination_directory: '/home/xminds/test'
+        exclude_list: '.git,.github,.gitmodules,node_modules'
+        pantheon: 'false' # Assuming this is not a Pantheon environment
+        ssh-key: ${{ secrets.REMOTE_REPO_SSH_KEY }}
