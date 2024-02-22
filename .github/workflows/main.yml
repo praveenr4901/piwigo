@@ -18,5 +18,4 @@ jobs:
           ssh-keyscan -H ${{ secrets.HOSTNAME }} >> ~/.ssh/known_hosts
       - name: Connect and Pull
         run: |
-          ssh-keyscan -H ${{ secrets.HOSTNAME }} >> ~/.ssh/known_hosts
           ssh ${{ secrets.USERNAME }}@${{ secrets.HOSTNAME }} "cd ${{ secrets.WORK_DIR }} && git checkout ${{ secrets.MAIN_BRANCH }} && git pull"
